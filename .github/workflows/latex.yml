@@ -22,7 +22,7 @@ jobs:
 
     - name: Move PDF to root
       run: |
-        cp *.pdf ./cv.pdf
+        mv CV.pdf cv.pdf
 
     - name: Commit PDF
       run: |
