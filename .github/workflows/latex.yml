@@ -18,16 +18,16 @@ jobs:
     - name: Set up TeX Live
       uses: xu-cheng/latex-action@v2
       with:
-        root_file: lab1_instruction.tex  # <-- Change this to your actual .tex filename
+        root_file: Lab1/lab1_instruction.tex  # <-- Change this to your actual .tex filename
 
     - name: Move PDF to root
       run: |
-        mv lab1_instruction.pdf lab1_guide.pdf
+        mv Lab1/lab1_instruction.pdf Lab1/lab1_guide.pdf
 
     - name: Commit PDF
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add lab1_guide.pdf
+        git add Lab1/lab1_guide.pdf
         git commit -m "Auto-compile LaTeX to PDF"
         git push
