@@ -1,155 +1,160 @@
-\documentclass{resume} % Use the custom resume.cls style
-
-\usepackage[left=0.4 in,top=0.4in,right=0.4 in,bottom=0.4in]{geometry} % Document margins
-\name{Qian Wu} % Your name
-% You can merge both of these into a single line, if you do not have a website.
-\address{\href{mailto:qian.wu2@dukekunshan.edu.cn}{Email: qian.wu2@dukekunshan.edu.cn} \hspace{3mm} \href{https://qian-wu.weebly.com/}{Personal Website: https://qian-wu.weebly.com/}}
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{ulem}
+\usepackage{setspace}
+\usepackage[usenames,dvipsnames]{xcolor}
+\setlength\parindent{0pt}
 
 \begin{document}
 
-%----------------------------------------------------------------------------------------
-%----------------------------------------------------------------------------------------
-% EDUCATION SECTION
-%----------------------------------------------------------------------------------------
+\title{Lab 1: Introduction to Quarto}
+\author{Qian Wu}
+\date{2025 Fall Session 2}
 
-\begin{rSection}{Academic Positions}
-{\bf Assistant Professor of Economics}, Duke Kunshan University \hfill {2025/8-}\\
-{\bf Assistant Professor of Practice}, Duke University \hfill {2025/8-}
-\end{rSection}
+\maketitle
+\section{What is Quarto?}
+Quarto is a document container that allows you to mix code, output, and text to produce reproducible results and auto-generate high quality document. 
 
-
-\begin{rSection}{Education}
-
-{\bf PhD in Economics}, Indiana University \hfill {2025/5}\\
-{\bf MS in Economics}, Baylor University \hfill {2019/5}\\
-{\bf BS in Finance}, Zhengzhou University \hfill {2016/7}
-%Minor in Linguistics \smallskip \\
-%Member of Eta Kappa Nu \\
-%Member of Upsilon Pi Epsilon \\
+\section{Install Quarto}
+To install Quarto, please enter the following line of code in the Terminal window (not the Console window):    
+\begin{verbatim}
+    quarto install tinytex
+\end{verbatim}
+\begin{center}
+    \includegraphics[scale=0.3]{Terminal.png}
+\end{center}
 
 
-\end{rSection}
+\section{Practicing with Quarto}
+To complete this lab, please do a simple investigation into the distribution of \textbf{mpg} (miles per gallon) and \textbf{wt} (weight) from the \textbf{mtcars} built-in dataset.
+\begin{enumerate}
+    \item Select File $\rightarrow$ New File $\rightarrow$ Quarto Document. 
+    \item Create YAML header.
+    \item Insert an R code block and then make a histogram of \textbf{mpg}.
+    \item Describe features of the mpg distribution (center, spread).
+    \item Repeat for the variable \textbf{wt}.
+    \item Add appropriate headers for each section and make sure you can navigate between them.
+    \item Write a brief conclusion of your investigation.
+\end{enumerate}
+Feeling overwhelmed? Turn to next page for step-by-step instructions!
+
+\subsection{Two Views to Edit Document}
+RStudio has two views for editing your document, Source and Visual. 
+\begin{center}
+   \includegraphics[scale=.8]{editmode.png} 
+\end{center}
+Most people find it easier to edit using the Visual mode. Switch back and forth between the
+two views to check the differences.
+
+\subsection{Create YAML Header}
+At the top of your document, there is a metadata block that controls the document's properties and appearance. This is the YAML header.
+
+\begin{center}
+   \includegraphics[scale=.8]{yamlblock.png} 
+\end{center}
+
+You CANNOT put R code in this section and it must always be at the top of your document.
+For common YAML fields, check \href{https://quarto.org/docs/reference/formats/html.html}{here}. 
+
+\textcolor{blue}{Please add a subtitle and an abstract to your YAML header.}
 
 
+\subsection{Insert R Code Block}
+To write R code, you need to add a code block with the ``Insert a New Code Chunk" button.
+\begin{center}
+    \includegraphics[scale=.8]{Insert code block.png}
+\end{center}
 
-\begin{rSection}{RESEARCH INTERESTS}
-Macro-Finance, Macroeconomics
-\end{rSection}
- 
+\subsubsection{Setup block}
+We often begin the R code with the setup block. In the setup block, you will set working directory, clean objectives, and library (load) all packages needed to run the code.\footnote{Note: do not put install packages commands. You only need to install
+packages once.} A good setup block looks like this:
+\begin{center}
+    \includegraphics[scale=.7]{setupblock.png}
+\end{center}
+\textcolor{blue}{Please add a setup block to load the \textbf{tidyverse} library.} 
 
 
-\begin{rSection}{PROFESSIONAL EXPERIENCE}
-Summer Intern at Inter-American Development Bank (IDB)
-\hfill{2023/6 - 2023/8}
-\iffalse
+\subsubsection{Other blocks}
+You might notice that, the setup bock contains ``\verb!#|!" symbols. In Quarto, the ``\verb!#|!" prefix in a code block is used for YAML option syntax within code cells. It allows you to specify cell-specific options directly in the code chunk. Each code block header starts with
+\begin{verbatim}
+    #| <option>: <value>
+\end{verbatim}
+For example, here is a simple code block to produce a histogram with ggplot function.
+\begin{center}
+    \includegraphics[scale=.8]{histsample.png}
+\end{center}
+What do the code block headers (line 75-77) do? 
 \begin{itemize}
-\addtolength\itemsep{-2mm}
-    \item Led a comprehensive review of international literature and policies related to sustainable housing settlements, green housing finance arrangements, and subsidy programs.
-    \item Organized and participated in meetings with global housing market stakeholders to enhance academic understanding and foster institutional collaboration.
-    \item Authored the paper titled "Innovative Disruption to Address Housing Deficits in Latin American and Caribbean Countries (LAC) Considering International Best Practices".
+    \item ``\verb!#| label: test-hist!" labels this code block, indicating we are creating a test histogram. \footnote{It's a good habit to label each code block so it is easy to move around your document and recall what each block does. }
+    \item ``\verb!#| fig-cap: "Histogram of variable: MPG"!" assigns the caption ``Histogram of variable: MPG" to the output histogram. 
+    \item ``\verb!#| echo: true!" specifies both the R code and the output histogram (with caption) should appear in the rendered PDF.
 \end{itemize}
+The remaining lines (line 79-80) use ggplot function to draw a histogram for the variable \textbf{mpg} in the dataset \textbf{mtcars}.
 
-\textbf{Research Assistant} for \textbf{Brittany Almquist Lewis} \hfill{2022/8 - 2023/5}
+\textcolor{blue}{Please create two code blocks, one that produces a histogram of the variable \textbf{mpg} and the other that finds the mean and the standard deviation of \textbf{mpg} (you can use the following code example below). Label these two blocks and your setup block.}
+\begin{verbatim}
+    mtcars %>%
+      summarise(mean_mpg = mean(mpg), sd_mpg = sd(mpg))
+\end{verbatim}
+
+
+\subsection{Execute Code}
+There are two ways to execute (run) your code.
 \begin{itemize}
-\addtolength\itemsep{-2mm}
-    \item Utilized High Performance Computer (HPC) Linux command line programming to access and clean Corelogic mortgage loan origination and MBS data.
-    \item Employed fuzzy match techniques in R to establish a crosswalk between mortgage servicers and financial entities.
-    \item Analyzed housing market data in STATA using advanced econometric and statistical models, including correlation analysis, fixed effects, static Difference-in-Difference, and stacked dynamic Difference-in-Difference.
+    \item Execute entire script: The Render button renders your document from the very first block, going all the way to the end (unless there is an error, in which case it will stop).
+    \begin{center}
+        \includegraphics[scale=.8]{render.png}
+    \end{center}
+    \item Execute each block: The green triangle on the right top corner exceutes only the code in that block. This can be useful to quickly check if your code works. However, it can be dangerous because (1) it can call back the objectives you have deleted the code for; (2) the preview window can display unreliable formats.
+    \begin{center}
+        \includegraphics[scale=.5]{greentriangle.png}
+    \end{center}
+    I consider it best practice to use the Render button regularly to make sure your document will work at submission time and display the way you prefer. 
 \end{itemize}
-\fi
-\end{rSection} 
+\textcolor{blue}{Please click Render button and verify your document will produce the desired outcome.}
+
+\subsection{Label Graphs and Tables}
+Sometimes, we want to auto-number and cross-reference graphs and tables throughout a document.\footnote{See \href{https://quarto.org/docs/authoring/figures.html\#cross-references}{here} and \href{https://quarto.org/docs/authoring/tables.html\#cross-references}{here} for instructions on graphs and tables, respectively.} Quarto allows us to do these in a systematic way. For code blocks with figures, we can label figures by adding a block header:
+\begin{verbatim}
+    #| label: fig-<your choice of label>
+\end{verbatim}
+For example, ``\verb!#| label: fig-mtcarsmpghist!" can be a good label for the histogram of \textbf{mpg} in the dataset \textbf{mtcars}.
+
+\textcolor{blue}{Replace the} ``\verb!#| label: test-hist!" \textcolor{blue}{header with} ``\verb!#| label: fig-<your choice of label>! \textcolor{blue}{to label your histogram.} 
+
+When there are multiple graphs, you can assign different captions to them by adding a block header:
+\begin{verbatim}
+    #| fig-subcap: 
+    #|   - "<caption for subgraph 1>"
+    #|   - "<caption for subgraph 2>"
+\end{verbatim}
+\textcolor{blue}{Following \href{https://quarto.org/docs/authoring/figures.html\#subcaptions}{this page}, in the test-hist block, add a second histogram of \textbf{mtcars\$mpg} but change the binwidth. Create subcaptions for the two plots.}
 
 
-\begin{rSection}{WORKING PAPERS}
-    
-    \textit{\textbf{A New Keynesian Preferred Habitat Model with Repo} } (Job Market Paper)
-    \begin{itemize}
-        \item[]\textbf{Abstract:} This paper documents puzzling discrepancies in the Treasury cash and repo markets during the Global Financial Crisis (GFC) and the Covid-19 pandemic. To explain these observations, I develop a New Keynesian Preferred Habitat model with repo featuring market segmentation, financial frictions, and preference shocks. The stochastic discount factor captures both financial and macroeconomic conditions. In this framework, financial market tensions can trigger real recessions, even in the absence of fundamental disruptions. The model illustrates a flight-to-liquidity demand during the GFC, and a flight-from-safety supply during the Covid-19 pandemic. The findings suggest that the effectiveness of monetary policies depends on financial frictions and the relative importance of the cash versus repo borrowing channels. Overall, this paper underscores the strong linkage between financial markets and the real economy.
-        \item[]\textbf{Presentations:} IU Macroeconomics Brownbag (x3); Chinese Economists Society (CES) 2024 Annual Conference; Singapore Economic Review Conference (SERC) 2024; Midwest Macroeconomics Meetings (MMM) Fall 2024; 19th Economics Graduate Student Conference; Duke-Kunshan University; American Finance Association (AFA) 2025 Annual Meeting Poster Session; Cornerstone Research; NYU-Shanghai Finance; University of Richmond; Colgate University (cancelled).
-    \end{itemize}
-   
-     
+\subsection{Repeat for Variable wt}
+\textcolor{blue}{Now repeat the operations above for the variable \textbf{wt}: draw histogram and calculate mean and standard deviation. Write a few sentences interpreting your results.}
 
-    \item \textit{\textbf{SOFR So Good? New Benchmark Interest Rate and Crowding-Out Effect} } 
-    \begin{itemize}
-        \item[]\textbf{Abstract:} This paper examines the scarce collateral channel through which government debt may create an additional crowding-out effect on asset prices and macroeconomic variables under the SOFR regime. An increased supply of Treasuries diminishes their scarcity value, leading to higher borrowing costs for Treasury holders in the repo market and an increase in the SOFR. I provide empirical evidence demonstrating that rising government debt correlates with an increase in SOFR.  I then build a stylized model where LIBOR or SOFR can index the business coupon rate. This scarce collateral channel allows public debt to impact the real economy under the SOFR regime without relying on distortionary taxes, though quantitative analysis indicates that the effect in general equilibrium is minimal.
-        \item[]\textbf{Presentations:} IU Macroeconomics Brownbag (x2); 2022 Hoosier Economics Conference; 2023 AEA CSWEP Wrokshop.
-    \end{itemize}
-\end{rSection} 
+\subsubsection{Navigate document}
+To make your document navigable (auto-generate a content), you need to specify headings for your document sections. We use ``\verb!#!" for sections, ``\verb!##!" for subsections, and so on so forth.
+    \begin{center}
+        \includegraphics[scale=.7]{headings.png}
+    \end{center}
 
-
-\newpage
-\begin{rSection}{WORK IN PROGRESS}
-\textbf{\textit{Price Implications of ESG Mandates Across Market Structures}} (with Christian Heyerdahl-Larsen)
-\end{rSection}
-
-
-
-\begin{rSection}{HONORS AND AWARDS}
-Best Graduate Student Paper  \hfill{Hoosier Economics Conference, 2022} \\
-Best Third-Year Paper \hfill{IU Economics Department, 2022} \\
-Graduate Student Travel Award \hfill{IU College of Arts and Sciences, 2024} \\
-AFA PhD Student Travel Grant \hfill{AFA, 2024} 
-\end{rSection} 
-
-
-\begin{rSection}{PRESENTATIONS}
- (*:scheduled) 
-
-\textbf{2022}: IU Hoosier Economics Conference; IU Macro Brownbag. \\
-\textbf{2023}: 2023 American Economic Association (AEA) CSWEP Wrokshop; Inter-American Development Bank (x2); IU Macro Brownbag (x2). \\
-\textbf{2024}: IU Macroeconomics Brownbag (x2); Chinese Economists Society (CES) 2024 Annual Conference; Singapore Economic Review Conference (SERC) 2024; Midwest Macroeconomics Meetings (MMM) Fall 2024; 19th Economics Graduate Student Conference; Duke-Kunshan University. \\
-\textbf{2025}: American Finance Association (AFA) 2025 Annual Meeting Poster Session; Cornerstone Research; NYU-Shanghai Finance; University of Richmond; Colgate University (cancelled).
-\end{rSection} 
-
-
-
-\begin{rSection}{TEACHING EXPERIENCE}
-Instructor of 
+You can navigate your document in two ways.
 \begin{itemize}
-\addtolength\itemsep{-2mm}
-    \item[]  Statistical Analysis for Business and Economics \hfill{2021 spring, 2022 spring, 2022 fall, 2023 spring}
-    \item[] Money and Banking \hfill{2024 fall}
-\end{itemize}  
-Teaching Assistant of 
-\begin{itemize}
-\addtolength\itemsep{-2mm}
-    \item[] Intro to Macroeconomics \hfill{2019 fall, 2020 spring}
-    \item[] Foundation of Economics for Business I \hfill{2020 fall, 2021 summer}
-    \item[] Foundation of Economics for Business II \hfill{2024 spring}
-    \item[] Statistical Analysis for Business and Economics \hfill{2021 fall, 2023 fall} 
+    \item Outline window on the top right corner.
+    \begin{center}
+        \includegraphics[scale=.7]{outline.png}
+    \end{center}
+    \item Menu list on the bottom left corner. 
+        \begin{center}
+        \includegraphics[scale=.7]{menu.png}
+    \end{center}
 \end{itemize}
-\end{rSection} 
-
-\begin{rSection}{SKILLS}
-\textbf{Programming} MATLAB, Dynare, R, STATA, Python
-\end{rSection}
-
-\iffalse
-\begin{rSection}{MISCELLANEOUS}
-    \begin{itemize}
-        \item[]Date of Birth: 1994/10/17 
-        \item[]Chinese citizen, F1 Visa holder
-    \end{itemize}
-\end{rSection}
-\fi
-
-
-
-\begin{rSection}{REFERENCES}
-    Bulent Guler  \hspace{7.5cm} Christian Heyerdahl-Larsen\\
-    Department of Economics, Indiana University \hspace{2cm} Department of Finance, BI Norwegian Business School\\
-    bguler@iu.edu \hspace{7.35cm} christian.heyerdahl-larsen@bi.no\\
-\\
-Rupal Kamdar \hspace{7.2cm} Nastassia Krukava (teaching)\\
-Department of Economics, Indiana University \hspace{2cm} Department of Economics, Indiana University\\
-rkamdar@iu.edu \hspace{7cm} nkrukava@iu.edu 
-\end{rSection}
-
-
-
-
-
-\hfill Last updated: May 2025
-
+\section{Finish up}
+Once you finish, please show me your result and then you can proceed to \href{https://quarto.org/docs/get-started/computations/rstudio.html}{this website} for a computations tutorial. Please try to modify your document according to the exercises on the
+tutorial webpage until the end of class.
 \end{document}
