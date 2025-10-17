@@ -14,15 +14,20 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Important for full history
 
-    - name: Set up TeX Live
+    - name: Compile LaTeX document
       uses: xu-cheng/latex-action@v2
       with:
-        root_file: Lab1/lab1_instruction.tex  # <-- Change this to your actual .tex filename
+        root_file: lab1_instruction.tex  # <-- Change this to your actual .tex filename
+        working_directory: Lab1/
 
-    - name: Move PDF to root
-      run: |
-        mv Lab1/lab1_instruction.pdf Lab1/lab1_guide.pdf
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: lab1-pdf
+        path: Lab1/lab1_instruction.pdf
 
     - name: Commit PDF
       run: |
